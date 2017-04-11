@@ -28,7 +28,7 @@ model.load_weights(saved_weights_dir)
 #%% Reshape scaled image for input to model (must be 4 dimensions with channels last)
 #input_img = np.expand_dims(scaled, axis=0)
 #input_img = np.transpose(scaled, (1, 2, 0))
-input_img = np.expand_dims(scaled, axis=0)
+input_img = np.expand_dims(input_img, axis=0)
 
 
 #%%
