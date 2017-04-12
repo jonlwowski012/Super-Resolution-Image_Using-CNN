@@ -15,14 +15,14 @@ input_dir = 'BSDS500Resized/input'
 label_dir = 'BSDS500Resized/label'
 model_dir = 'BSDS500Resized/model'
 
-epochs=100
+epochs=50
 batch_size=20
 max_pixel_val = float(255)
 
 
 # Define the window size
-windowsize_r = 8
-windowsize_c = 8
+windowsize_r = 32
+windowsize_c = 32
 
 
 #%% Import images
@@ -56,7 +56,7 @@ y = np.expand_dims(y, axis=0)'''
 
 
 #%% Define model
-inputs = Input(shape=(8, 8, 3))
+inputs = Input(shape=(windowsize_r, windowsize_c, 3))
 x = Conv2D(64, (9, 9), input_shape=(256, 256, 3), activation='relu', kernel_initializer='he_normal', padding='same')(inputs)
 x = Conv2D(32, (1, 1), activation='relu', kernel_initializer='he_normal', padding='same')(x)
 x = Conv2D(3, (5, 5), kernel_initializer='he_normal', padding='same')(x)
