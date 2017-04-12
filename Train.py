@@ -15,14 +15,14 @@ input_dir = 'BSDS500Resized/input'
 label_dir = 'BSDS500Resized/label'
 model_dir = 'BSDS500Resized/model'
 
-epochs=50
-batch_size=20
+epochs=10
+batch_size=12000
 max_pixel_val = float(255)
 
 
 # Define the window size
-windowsize_r = 32
-windowsize_c = 32
+windowsize_r = 8
+windowsize_c = 8
 
 
 #%% Import images
@@ -43,28 +43,31 @@ for f in listdir(label_dir):
 
 X = np.asarray(X)
 y = np.asarray(y)
+
+#%%
+X = X[0:480000]
+y = y[0:480000]
 #X = np.array([misc.imread(join(input_dir, f)) for f in listdir(input_dir)])
 #y = np.array([misc.imread(join(label_dir, f)) for f in listdir(label_dir)])
 
-print X.shape
+#print(X.shape)
 
-'''X = np.expand_dims(X, axis=0)
-y = np.expand_dims(y, axis=0)'''
-
+#X = np.expand_dims(X, axis=0)
+#y = np.expand_dims(y, axis=0)
 #X = np.transpose(X, (1, 2, 3, 0))
 #y = np.transpose(y, (1, 2, 3, 0))
 
 
 #%% Define model
 inputs = Input(shape=(windowsize_r, windowsize_c, 3))
-x = Conv2D(64, (9, 9), input_shape=(256, 256, 3), activation='relu', kernel_initializer='he_normal', padding='same')(inputs)
+x = Conv2D(64, (9, 9), input_shape=(windowsize_r, windowsize_c, 3), activation='relu', kernel_initializer='he_normal', padding='same')(inputs)
 x = Conv2D(32, (1, 1), activation='relu', kernel_initializer='he_normal', padding='same')(x)
 x = Conv2D(3, (5, 5), kernel_initializer='he_normal', padding='same')(x)
 model = Model(inputs=inputs, outputs=x)
 
 
 #%% Define SSIM Loss
-SSIM = DSSIMObjective(k1=0.01, k2=0.03, kernel_size=3, max_value=1.0)
+SSIM = DSSIMObjective(k1=0.01, k2=0.03, kernel_size=2, max_value=1.0)
 
 
 #%% Define PSNR performance metric Note: max_pixel_value = 255 for uint8
