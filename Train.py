@@ -19,9 +19,32 @@ epochs=100
 batch_size=20
 max_pixel_val = float(255)
 
+
+# Define the window size
+windowsize_r = 8
+windowsize_c = 8
+
+
 #%% Import images
-X = np.array([misc.imread(join(input_dir, f)) for f in listdir(input_dir)])
-y = np.array([misc.imread(join(label_dir, f)) for f in listdir(label_dir)])
+X = []
+for f in listdir(input_dir):
+	test_image = np.asarray(misc.imread(join(input_dir, f)))
+	# Crop out the window and calculate the histogram
+	for r in range(0,test_image.shape[0] - windowsize_r, windowsize_r):
+    		for c in range(0,test_image.shape[1] - windowsize_c, windowsize_c):
+        		X.append(test_image[r:r+windowsize_r,c:c+windowsize_c])
+y = []
+for f in listdir(label_dir):
+	test_image = np.asarray(misc.imread(join(label_dir, f)))
+	# Crop out the window and calculate the histogram
+	for r in range(0,test_image.shape[0] - windowsize_r, windowsize_r):
+    		for c in range(0,test_image.shape[1] - windowsize_c, windowsize_c):
+        		y.append(test_image[r:r+windowsize_r,c:c+windowsize_c])
+
+X = np.asarray(X)
+y = np.asarray(y)
+#X = np.array([misc.imread(join(input_dir, f)) for f in listdir(input_dir)])
+#y = np.array([misc.imread(join(label_dir, f)) for f in listdir(label_dir)])
 
 print X.shape
 
@@ -33,7 +56,7 @@ y = np.expand_dims(y, axis=0)'''
 
 
 #%% Define model
-inputs = Input(shape=(256, 256, 3))
+inputs = Input(shape=(8, 8, 3))
 x = Conv2D(64, (9, 9), input_shape=(256, 256, 3), activation='relu', kernel_initializer='he_normal', padding='same')(inputs)
 x = Conv2D(32, (1, 1), activation='relu', kernel_initializer='he_normal', padding='same')(x)
 x = Conv2D(3, (5, 5), kernel_initializer='he_normal', padding='same')(x)

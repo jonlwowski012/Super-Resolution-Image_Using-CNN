@@ -16,12 +16,35 @@ label_dir = 'BSDS500Resized/label'
 model_dir = 'BSDS500Resized/model'
 
 epochs=100
-batch_size=30
+batch_size=20
 max_pixel_val = float(255)
 
+
+# Define the window size
+windowsize_r = 8
+windowsize_c = 8
+
+
 #%% Import images
-X = np.array([misc.imread(join(input_dir, f)) for f in listdir(input_dir)])
-y = np.array([misc.imread(join(label_dir, f)) for f in listdir(label_dir)])
+X = []
+for f in listdir(input_dir):
+	test_image = np.asarray(misc.imread(join(input_dir, f)))
+	# Crop out the window and calculate the histogram
+	for r in range(0,test_image.shape[0] - windowsize_r, windowsize_r):
+    		for c in range(0,test_image.shape[1] - windowsize_c, windowsize_c):
+        		X.append(test_image[r:r+windowsize_r,c:c+windowsize_c])
+y = []
+for f in listdir(label_dir):
+	test_image = np.asarray(misc.imread(join(label_dir, f)))
+	# Crop out the window and calculate the histogram
+	for r in range(0,test_image.shape[0] - windowsize_r, windowsize_r):
+    		for c in range(0,test_image.shape[1] - windowsize_c, windowsize_c):
+        		y.append(test_image[r:r+windowsize_r,c:c+windowsize_c])
+
+X = np.asarray(X)
+y = np.asarray(y)
+#X = np.array([misc.imread(join(input_dir, f)) for f in listdir(input_dir)])
+#y = np.array([misc.imread(join(label_dir, f)) for f in listdir(label_dir)])
 
 print X.shape
 
