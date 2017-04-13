@@ -11,9 +11,9 @@ from keras_contrib.losses import DSSIMObjective
 
 
 #%% Define paths and variables
-input_dir = '../BSDS500Resized/input'
-label_dir = '../BSDS500Resized/label'
-model_dir = '../BSDS500Resized/model'
+input_dir = 'Caltech256_Resized/input'
+label_dir = 'Caltech256_Resized/label'
+model_dir = 'image_slicing_SSIM/model'
 
 epochs=15
 batch_size=20

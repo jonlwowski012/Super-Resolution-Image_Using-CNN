@@ -7,14 +7,14 @@ import matplotlib.pyplot as plt
 #%% Define variables
 input_size = (128, 128)
 label_size = (256, 256)
-saved_model_dir = '../BSDS500Resized/model/model.json'
-saved_weights_dir = '../BSDS500Resized/model/model_weights.h5'
-output_dir = 'output'
+saved_model_dir = 'image_slicing_SSIM/model/model.json'
+saved_weights_dir = 'image_slicing_SSIM/model/model_weights.h5'
+output_dir = 'image_slicing_SSIM/output'
 # Define the window size
 windowsize_r = 32
 windowsize_c = 32
 
-image_dir = '../a10.jpg'
+image_dir = 'a10.jpg'
 
 
 #%% Rescale images 
