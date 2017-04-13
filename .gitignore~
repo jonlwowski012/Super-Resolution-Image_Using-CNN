@@ -53,8 +53,10 @@ coverage.xml
 # Django stuff:
 *.log
 local_settings.py
-Caltech256
-Caltech256_Resized
+Caltech256/
+Caltech256_Resized/
+BSDS500/
+BSDS500Resized/
 
 # Flask stuff:
 instance/
