@@ -6,7 +6,7 @@ from os.path import join
 #%% Define variables
 input_size = (128, 128)
 label_size = (256, 256)
-saved_model_dir = 'BSDS500Resized/model'
+saved_model_dir = 'Caltech256_Resized/model'
 model_name = ('Rmodel.json', 'Gmodel.json', 'Bmodel.json')
 saved_weights_name = ('Rmodel_weights.h5', 'Gmodel_weights.h5', 'Bmodel_weights.h5')
 output_dir = 'output'
@@ -15,7 +15,7 @@ output_dir = 'output'
 windowsize_r = 8
 windowsize_c = 8
 
-image_dir = 'a10.jpg'
+image_dir = 'lena.bmp'
 
 
 #%% Rescale images 

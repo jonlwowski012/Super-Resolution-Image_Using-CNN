@@ -11,15 +11,15 @@ from keras.initializers import RandomNormal
 from keras_contrib.losses import DSSIMObjective
 
 
-#%% Define paths and variables
-input_dir = 'BSDS500Resized/input'
-label_dir = 'BSDS500Resized/label'
-model_dir = 'BSDS500Resized/model'
+#%%Define paths and variables
+input_dir = 'Caltech256_Resized/input'
+label_dir = 'Caltech256_Resized/label'
+model_dir = 'Caltech256_Resized/model'
 model_name = ('Rmodel.json', 'Gmodel.json', 'Bmodel.json')
 model_weights_name = ('Rmodel_weights.h5', 'Gmodel_weights.h5', 'Bmodel_weights.h5')
 
 epochs=20
-batch_size=4000
+batch_size=2000
 max_pixel_val = float(255)
 
 
@@ -61,7 +61,7 @@ bias_init = RandomNormal(mean=0.0, stddev=0.0)
 inputs = Input(shape=(windowsize_r, windowsize_c, 1))
 x = Conv2D(64, (9, 9), input_shape=(windowsize_r, windowsize_c, 1), activation='relu',
            kernel_initializer=kernel_init, bias_initializer=bias_init, padding='same')(inputs)
-x = Conv2D(32, (1, 1), activation='relu', kernel_initializer=kernel_init,
+x = Conv2D(64, (5, 5), activation='relu', kernel_initializer=kernel_init,
            bias_initializer=bias_init,padding='same')(x)
 x = Conv2D(1, (5, 5), kernel_initializer=kernel_init, bias_initializer=bias_init, padding='same')(x)
 model = Model(inputs=inputs, outputs=x)
@@ -84,10 +84,11 @@ def psnr(y_true, y_pred):
 model.compile(optimizer=Adam(lr=0.001), loss=SSIM, metrics=['mse', psnr])
 
 
+
 #%% Loop for R G and B channels
 for i in range(3):
-    Xtrain = X[:,:,:,0]
-    ytrain = y[:,:,:,0]
+    Xtrain = X[:,:,:,i]
+    ytrain = y[:,:,:,i]
     
     Xtrain = np.expand_dims(Xtrain, axis=3)
     ytrain = np.expand_dims(ytrain, axis=3)
