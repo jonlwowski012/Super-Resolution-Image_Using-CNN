@@ -7,14 +7,14 @@ import matplotlib.pyplot as plt
 #%% Define variables
 input_size = (128, 128)
 label_size = (256, 256)
-saved_model_dir = 'BSDS500Resized/model/model.json'
-saved_weights_dir = 'BSDS500Resized/model/model_weights.h5'
+saved_model_dir = '../BSDS500Resized/model/model.json'
+saved_weights_dir = '../BSDS500Resized/model/model_weights.h5'
 output_dir = 'output'
 # Define the window size
-windowsize_r = 8
-windowsize_c = 8
+windowsize_r = 32
+windowsize_c = 32
 
-image_dir = 'a10.jpg'
+image_dir = '../a10.jpg'
 
 
 #%% Rescale images 
@@ -69,7 +69,7 @@ for r in range(0, output_img.shape[0] - windowsize_r + 1, windowsize_r):
 	for c in range(0,output_img.shape[1] - windowsize_c + 1, windowsize_c):
 		output_img[r:r+windowsize_r,c:c+windowsize_c] = output[i,:,:,:]
 		i += 1
-
+output_img = np.dstack((output_img[:,:,2],output_img[:,:,0],output_img[:,:,1]))
 #%% Format output to 2-D tensor for saving image
 #output = np.squeeze(output)
 

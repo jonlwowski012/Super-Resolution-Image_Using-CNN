@@ -12,7 +12,7 @@ for f in listdir(input_dir):
     input_name = f
     f = join(input_dir, f)
 
-    image = misc.imread(f, flatten=False, mode='L')
+    image = misc.imread(f, flatten=False)
 
     scaled = misc.imresize(image, input_size, 'bicubic')
     scaled = misc.imresize(scaled, label_size, 'bicubic')
